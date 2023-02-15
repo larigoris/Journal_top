@@ -1,0 +1,21 @@
+import turtle from *
+pensize(100000)
+forward(100)
+left(90)
+forward(100)
+penup()
+color('red', 'yellow')
+pendown()
+left(90)
+forward(100)
+left(180)
+forward(150)
+
+
+from turtle import *
+while(True):
+    circle(80)
+    penup()
+    forward(10)
+    pendown()
+    circle(80)
