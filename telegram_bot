@@ -1,0 +1,42 @@
+import time
+import telebot
+
+
+list_to_do = []
+
+bot = telebot.TeleBot('6136709221:AAF4UjRxRmZdzB-5GePZgZkUHjJyATEhB2Y')
+
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.send_message(message.from_user.id, "Приветствую я Time_Manager! Я помогу тебе правильно распределять время и не забвать ни одно из дел!\n"
+                                           "просто напиши: /opportunities_list")
+
+
+@bot.message_handler(commands=['opportunities_list'])
+def opportunities_list(message):
+    bot.send_message(message.from_user.id, "Мои возможности:\n"
+                                           "/timer - я напишу тебе напоминание когда ты меня попросишь\n"
+                                           "/add_list - Можно добавить элемент в список дел\n"
+                                           "/show_list - Я выведу список дел")
+
+@bot.message_handler(commands=['timer'])
+def timer(message):
+    time_to_wait = int(message.text.split()[1])
+    time.sleep(time_to_wait * 60)
+    bot.send_message(message.from_user.id, 'Будильник!')
+
+@bot.message_handler(commands=['add_list'])
+def add_list(message):
+    global list_to_do
+    list_to_do.append(message.text[10:])
+    print(list_to_do)
+
+@bot.message_handler(commands=['show_list'])
+def show_list(message):
+    new_string = ''
+    for k, i in enumerate(list_to_do):
+        new_string = new_string + f'{k+1}. {i}\n'
+    bot.send_message(message.from_user.id, new_string)
+
+bot.polling(none_stop=True, interval=0)
